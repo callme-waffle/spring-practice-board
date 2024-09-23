@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Getter @Setter
 public class User extends CommonDAO {
@@ -17,16 +19,26 @@ public class User extends CommonDAO {
     private String email;
     private String userName;
 
-    @OneToOne(mappedBy = "id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "pw_id")
     private Pw password;
 
-    @ManyToOne()
+    @OneToMany(
+            mappedBy = "id",
+            fetch = FetchType.LAZY, cascade = CascadeType.ALL
+    )
+    private List<Pw> pw_history;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "part_id")
     private Part part;
 
-    @OneToOne(mappedBy = "id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "img_id")
     private FileData img;
 
     private String desc;
 
+    @Enumerated(EnumType.STRING)
     private UserRole role;
 }
