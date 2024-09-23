@@ -39,5 +39,6 @@ public class User extends CommonDAO {
 
     private String desc;
 
+    @Enumerated(EnumType.STRING)
     private UserRole role;
 }
