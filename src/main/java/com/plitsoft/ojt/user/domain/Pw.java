@@ -2,10 +2,13 @@ package com.plitsoft.ojt.user.domain;
 
 import com.plitsoft.ojt.global.domain.CommonDAO;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@AllArgsConstructor @NoArgsConstructor
 public class Pw extends CommonDAO {
 
     @Id @GeneratedValue
@@ -18,13 +21,4 @@ public class Pw extends CommonDAO {
     private String salt;
 
     private String pw;
-
-    public Pw() {}
-
-    public Pw(Long id, User user, String salt, String pw) {
-        this.id = id;
-        this.user = user;
-        this.salt = salt;
-        this.pw = pw;
-    }
 }

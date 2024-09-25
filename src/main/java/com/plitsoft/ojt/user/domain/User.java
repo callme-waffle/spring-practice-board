@@ -3,13 +3,16 @@ package com.plitsoft.ojt.user.domain;
 import com.plitsoft.ojt.file.domain.FileData;
 import com.plitsoft.ojt.global.domain.*;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
 
 @Entity
 @Getter @Setter
+@AllArgsConstructor @NoArgsConstructor
 public class User extends CommonDAO {
 
     @Id @GeneratedValue
