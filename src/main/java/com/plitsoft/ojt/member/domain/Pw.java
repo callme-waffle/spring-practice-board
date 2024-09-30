@@ -1,4 +1,4 @@
-package com.plitsoft.ojt.user.domain;
+package com.plitsoft.ojt.member.domain;
 
 import com.plitsoft.ojt.global.domain.CommonDAO;
 import jakarta.persistence.*;
@@ -16,7 +16,7 @@ public class Pw extends CommonDAO {
     private Long id;
 
     @OneToOne(mappedBy = "password")
-    private User user;
+    private Member member;
 
     private String salt;
 

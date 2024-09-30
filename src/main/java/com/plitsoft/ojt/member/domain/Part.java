@@ -1,4 +1,4 @@
-package com.plitsoft.ojt.user.domain;
+package com.plitsoft.ojt.member.domain;
 
 import com.plitsoft.ojt.global.domain.CommonDAO;
 import jakarta.persistence.Column;
