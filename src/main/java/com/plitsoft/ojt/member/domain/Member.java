@@ -1,23 +1,29 @@
-package com.plitsoft.ojt.user.domain;
+package com.plitsoft.ojt.member.domain;
 
 import com.plitsoft.ojt.file.domain.FileData;
 import com.plitsoft.ojt.global.domain.*;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
 @Getter @Setter
-public class User extends CommonDAO {
+@NoArgsConstructor @AllArgsConstructor @Builder
+public class Member extends CommonDAO {
 
     @Id @GeneratedValue
-    @Column(name = "user_id")
+    @Column(name = "member_id")
     private Long id;
 
+    @Email @NotNull
     private String email;
-    private String userName;
+
+    @NotBlank
+    private String memberName;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "pw_id")
@@ -40,5 +46,6 @@ public class User extends CommonDAO {
     private String desc;
 
     @Enumerated(EnumType.STRING)
+    @NotNull
     private UserRole role;
 }

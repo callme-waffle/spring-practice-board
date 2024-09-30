@@ -1,4 +1,4 @@
-package com.plitsoft.ojt.user.domain;
+package com.plitsoft.ojt.member.domain;
 
 public enum UserRole {
     ADMIN,
