@@ -23,13 +23,13 @@ public class memberRepository {
     }
 
     public List<Member> findByName(String name ) {
-        return em.createQuery( "select m from Member m where m.name = :name", Member.class )
+        return em.createQuery( "select m from Member m where m.memberName like concat('%', :name, '%')", Member.class )
                 .setParameter( "name", name )
                 .getResultList();
     }
 
     public List<Member> findByEmail(String email ) {
-        return em.createQuery( "select m from Member m where m.email = :email", Member.class )
+        return em.createQuery( "select m from Member m where m.email like concat(:email, '%')", Member.class )
                 .setParameter( "email", email )
                 .getResultList();
     }
