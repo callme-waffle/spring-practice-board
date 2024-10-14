@@ -2,12 +2,14 @@ package com.plitsoft.ojt.member.service;
 
 import com.plitsoft.ojt.global.exception.DuplicateValueException;
 import com.plitsoft.ojt.member.domain.Member;
+import com.plitsoft.ojt.member.dto.common.MemberFindFilter;
 import com.plitsoft.ojt.member.repository.memberRepository;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 @Transactional(readOnly = true)
@@ -22,20 +24,20 @@ public class memberService {
         return memberRepository.save(member);
     }
 
-    public Member find(Long user_id) {
-        return memberRepository.find( user_id );
+    public Member find(Long member_id) {
+        return memberRepository.find( member_id );
     }
 
-    public List<Member> findByName(String user_name) {
-        return memberRepository.findByName( user_name );
+    public List<Member> findByName(String member_name) {
+        return memberRepository.findByName( member_name );
     }
 
-    public List<Member> findByEmail(String user_email) {
-        return memberRepository.findByEmail( user_email );
+    public List<Member> findByEmail(String member_email) {
+        return memberRepository.findByEmail( member_email );
     }
 
-    private boolean checkEmailDup(String user_email) {
-        if ( !memberRepository.findByEmail( user_email ).isEmpty() )
+    private boolean checkEmailDup(String member_email) {
+        if ( !memberRepository.findByEmail( member_email ).isEmpty() )
             throw new DuplicateValueException( "Email Already In Use" );
         return true;
     }
