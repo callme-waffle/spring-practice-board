@@ -35,4 +35,14 @@ public class memberController {
         Member member = service.find( memberId );
         return new MemberSpecResDTO( member );
     }
+
+    @GetMapping( "/" )
+    public List<MemberResDTO> getMembers(
+            @RequestParam Map<GetMembersQueryKey.keys, String> queries
+    ) {
+        List<Member> members = service.findByFilter( GetMembersQueryKey.toMemberFindFilter( queries ) );
+        return members.stream()
+                .map(MemberResDTO::new)
+                .toList();
+    }
 }
