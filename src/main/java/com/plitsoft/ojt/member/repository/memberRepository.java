@@ -1,9 +1,8 @@
 package com.plitsoft.ojt.member.repository;
 
 import com.plitsoft.ojt.member.domain.Member;
-import com.plitsoft.ojt.member.dto.common.MemberFindFilter;
+import com.plitsoft.ojt.member.dto.common.MemberFilter;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -22,6 +21,21 @@ public class memberRepository {
 
     public Member find(Long id) {
         return em.find( Member.class, id );
+    }
+
+    public List<Member> findAll(Map<MemberFilter, String> filters) {
+        StringBuilder query_builder = new StringBuilder("select m from Member m where ");
+
+        int cnt = 0;
+        for ( MemberFilter key: MemberFilter.values() ) {
+            cnt++;
+            query_builder.append( String.format("m.%s = :%s and ", key.name(), filters.get(key) ) );
+        }
+
+        if ( cnt == 0 ) throw new IllegalArgumentException("Empty filter is unavailable");
+        query_builder.substring(0, query_builder.length()-5);
+
+        return em.createQuery( query_builder.toString() ).getResultList();
     }
 
     public List<Member> findByName(String name ) {

@@ -2,7 +2,7 @@ package com.plitsoft.ojt.member.service;
 
 import com.plitsoft.ojt.global.exception.DuplicateValueException;
 import com.plitsoft.ojt.member.domain.Member;
-import com.plitsoft.ojt.member.dto.common.MemberFindFilter;
+import com.plitsoft.ojt.member.dto.common.MemberFilter;
 import com.plitsoft.ojt.member.repository.memberRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -34,6 +34,10 @@ public class memberService {
 
     public List<Member> findByEmail(String member_email) {
         return memberRepository.findByEmail( member_email );
+    }
+
+    public List<Member> findByFilter(Map<MemberFilter, String> filter) {
+        return memberRepository.findAll( filter );
     }
 
     private boolean checkEmailDup(String member_email) {
