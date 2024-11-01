@@ -1,11 +1,12 @@
 package com.plitsoft.ojt.member.controller;
 
-
 import com.plitsoft.ojt.member.domain.Member;
-import com.plitsoft.ojt.member.dto.req.GetMembersQueryKey;
-import com.plitsoft.ojt.member.dto.res.MemberResDTO;
-import com.plitsoft.ojt.member.dto.res.MemberSpecResDTO;
+import com.plitsoft.ojt.member.dto.req.GetMembersReqQueryDTO;
+import com.plitsoft.ojt.member.dto.req.PatchMembersReqQueryDTO;
+import com.plitsoft.ojt.member.dto.res.GetMemberResDTO;
+import com.plitsoft.ojt.member.dto.res.GetMemberSpecResDTO;
 import com.plitsoft.ojt.member.service.memberService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,28 +22,28 @@ public class memberController {
     private memberService service;
 
     @GetMapping( "/{id}" )
-    public MemberResDTO getMember(
+    public GetMemberResDTO getMember(
             @PathVariable("id") Long memberId
     ) {
         Member member = service.find( memberId );
-        return new MemberResDTO( member );
+        return new GetMemberResDTO( member );
     }
 
     @GetMapping( "/{id}/spec" )
-    public MemberSpecResDTO getMemberSpec(
+    public GetMemberSpecResDTO getMemberSpec(
             @PathVariable("id") Long memberId
     ) {
         Member member = service.find( memberId );
-        return new MemberSpecResDTO( member );
+        return new GetMemberSpecResDTO( member );
     }
 
     @GetMapping( "/" )
-    public List<MemberResDTO> getMembers(
-            @RequestParam Map<GetMembersQueryKey.keys, String> queries
+    public List<GetMemberResDTO> getMembers(
+            @ModelAttribute @Valid GetMembersReqQueryDTO reqQueryDTO
     ) {
-        List<Member> members = service.findByFilter( GetMembersQueryKey.toMemberFindFilter( queries ) );
+        List<Member> members = service.findByFilter( reqQueryDTO );
         return members.stream()
-                .map(MemberResDTO::new)
+                .map(GetMemberResDTO::new)
                 .toList();
     }
 }
