@@ -1,4 +1,4 @@
- package com.plitsoft.ojt.member.dto.res;
+ package com.plitsoft.ojt.member.dto.response;
 
 import com.plitsoft.ojt.member.domain.Member;
 import lombok.Getter;
