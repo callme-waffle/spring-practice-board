@@ -17,33 +17,33 @@ import java.util.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping( "/api/v1/member" )
+@RequestMapping("/api/v1/member")
 public class memberController {
 
     @Autowired
     private memberService service;
 
-    @GetMapping( "/{id}" )
+    @GetMapping("/{id}")
     public GetMemberResDTO getMember(
             @PathVariable("id") Long memberId
     ) {
-        Member member = service.find( memberId );
-        return new GetMemberResDTO( member );
+        Member member = service.find(memberId);
+        return new GetMemberResDTO(member);
     }
 
-    @GetMapping( "/{id}/spec" )
+    @GetMapping("/{id}/spec")
     public GetMemberSpecResDTO getMemberSpec(
             @PathVariable("id") Long memberId
     ) {
-        Member member = service.find( memberId );
-        return new GetMemberSpecResDTO( member );
+        Member member = service.find(memberId);
+        return new GetMemberSpecResDTO(member);
     }
 
-    @GetMapping( "/" )
+    @GetMapping("/")
     public List<GetMemberResDTO> getMembers(
             @ModelAttribute @Valid GetMembersReqQueryDTO reqQueryDTO
     ) {
-        List<Member> members = service.findByFilter( reqQueryDTO );
+        List<Member> members = service.findByFilter(reqQueryDTO);
         return members.stream()
                 .map(GetMemberResDTO::new)
                 .toList();
