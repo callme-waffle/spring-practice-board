@@ -1,7 +1,7 @@
 package com.plitsoft.ojt.member.repository;
 
 import com.plitsoft.ojt.member.domain.Member;
-import com.plitsoft.ojt.member.dto.common.MemberFilter;
+import com.plitsoft.ojt.member.dao.FindRepositoryDAO;
 import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,16 +20,24 @@ public class memberRepository {
     }
 
     public Member find(Long id) {
-        return em.find( Member.class, id );
+        return em.find(Member.class, id);
     }
 
-    public List<Member> findAll(Map<MemberFilter, String> filters) {
+    public List<Member> findAll(FindRepositoryDAO findRepositoryDAO) {
         StringBuilder query_builder = new StringBuilder("select m from Member m where ");
 
         int cnt = 0;
-        for ( MemberFilter key: MemberFilter.values() ) {
+        if (!findRepositoryDAO.getMemberName().isEmpty()) {
             cnt++;
-            query_builder.append( String.format("m.%s = :%s and ", key.name(), filters.get(key) ) );
+            query_builder.append(String.format("m.memberName = :%s and ", findRepositoryDAO.getMemberName()));
+        }
+        if (!findRepositoryDAO.getEmail().isEmpty()) {
+            cnt++;
+            query_builder.append(String.format("m.email = :%s and ", findRepositoryDAO.getEmail()));
+        }
+        if (!findRepositoryDAO.getPart().isEmpty()) {
+            cnt++;
+            query_builder.append(String.format("m.part = :%s and ", findRepositoryDAO.getPart()));
         }
 
         if (cnt == 0) throw new IllegalArgumentException("Empty filter is unavailable");

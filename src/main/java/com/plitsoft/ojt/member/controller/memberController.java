@@ -48,4 +48,13 @@ public class memberController {
                 .map(GetMemberResDTO::new)
                 .toList();
     }
+
+    @PatchMapping("/{id}")
+    public PatchMemberResDTO patchMember(
+            @PathVariable("id") Long memberId,
+            @RequestParam @Valid PatchMembersReqQueryDTO requestQueryDTO
+    ) {
+        UpdateServiceDTO updateResult = service.update(memberId, requestQueryDTO);
+        return new PatchMemberResDTO(updateResult);
+    }
 }
