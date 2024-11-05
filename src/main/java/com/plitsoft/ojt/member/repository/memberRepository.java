@@ -32,21 +32,21 @@ public class memberRepository {
             query_builder.append( String.format("m.%s = :%s and ", key.name(), filters.get(key) ) );
         }
 
-        if ( cnt == 0 ) throw new IllegalArgumentException("Empty filter is unavailable");
-        query_builder.substring(0, query_builder.length()-5);
+        if (cnt == 0) throw new IllegalArgumentException("Empty filter is unavailable");
+        query_builder.substring(0, query_builder.length() - 5);
 
-        return em.createQuery( query_builder.toString() ).getResultList();
+        return em.createQuery(query_builder.toString()).getResultList();
     }
 
-    public List<Member> findByName(String name ) {
-        return em.createQuery( "select m from Member m where m.memberName = :name", Member.class )
-                .setParameter( "name", name )
+    public List<Member> findByName(String name) {
+        return em.createQuery("select m from Member m where m.memberName = :name", Member.class)
+                .setParameter("name", name)
                 .getResultList();
     }
 
-    public List<Member> findByEmail(String email ) {
-        return em.createQuery( "select m from Member m where m.email = :email", Member.class )
-                .setParameter( "email", email )
+    public List<Member> findByEmail(String email) {
+        return em.createQuery("select m from Member m where m.email = :email", Member.class)
+                .setParameter("email", email)
                 .getResultList();
     }
 }

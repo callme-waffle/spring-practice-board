@@ -24,20 +24,20 @@ public class memberService {
 
     @Transactional
     public Long join(Member member) {
-        checkEmailDup( member.getEmail() );
+        checkEmailDup(member.getEmail());
         return memberRepository.save(member);
     }
 
-    public Member find(Long member_id) {
-        return memberRepository.find( member_id );
+    public Member find(Long memberId) {
+        return memberRepository.find(memberId);
     }
 
-    public List<Member> findByName(String member_name) {
-        return memberRepository.findByName( member_name );
+    public List<Member> findByName(String memberName) {
+        return memberRepository.findByName(memberName);
     }
 
-    public List<Member> findByEmail(String member_email) {
-        return memberRepository.findByEmail( member_email );
+    public List<Member> findByEmail(String memberEmail) {
+        return memberRepository.findByEmail(memberEmail);
     }
 
     public List<Member> findByFilter(Map<MemberFilter, String> filter) {
@@ -45,8 +45,8 @@ public class memberService {
     }
 
     private boolean checkEmailDup(String member_email) {
-        if ( !memberRepository.findByEmail( member_email ).isEmpty() )
-            throw new DuplicateValueException( "Email Already In Use" );
+        if (!memberRepository.findByEmail(member_email).isEmpty())
+            throw new DuplicateValueException("Email Already In Use");
         return true;
     }
 }
