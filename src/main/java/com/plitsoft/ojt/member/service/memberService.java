@@ -2,7 +2,11 @@ package com.plitsoft.ojt.member.service;
 
 import com.plitsoft.ojt.global.exception.DuplicateValueException;
 import com.plitsoft.ojt.member.domain.Member;
-import com.plitsoft.ojt.member.dto.common.MemberFilter;
+import com.plitsoft.ojt.member.dao.FindRepositoryDAO;
+
+import com.plitsoft.ojt.member.dto.request.GetMembersReqQueryDTO;
+import com.plitsoft.ojt.member.dto.request.PatchMembersReqQueryDTO;
+import com.plitsoft.ojt.member.map.MemberMapper;
 import com.plitsoft.ojt.member.repository.memberRepository;
 import lombok.RequiredArgsConstructor;
 

@@ -1,10 +1,12 @@
 package com.plitsoft.ojt.member.controller;
 
 import com.plitsoft.ojt.member.domain.Member;
-import com.plitsoft.ojt.member.dto.req.GetMembersReqQueryDTO;
-import com.plitsoft.ojt.member.dto.req.PatchMembersReqQueryDTO;
-import com.plitsoft.ojt.member.dto.res.GetMemberResDTO;
-import com.plitsoft.ojt.member.dto.res.GetMemberSpecResDTO;
+import com.plitsoft.ojt.member.dto.common.UpdateServiceDTO;
+import com.plitsoft.ojt.member.dto.request.GetMembersReqQueryDTO;
+import com.plitsoft.ojt.member.dto.request.PatchMembersReqQueryDTO;
+import com.plitsoft.ojt.member.dto.response.GetMemberResDTO;
+import com.plitsoft.ojt.member.dto.response.GetMemberSpecResDTO;
+import com.plitsoft.ojt.member.dto.response.PatchMemberResDTO;
 import com.plitsoft.ojt.member.service.memberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
