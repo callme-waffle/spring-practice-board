@@ -1,5 +1,6 @@
 package com.plitsoft.ojt.member.controller;
 
+import com.plitsoft.ojt.global.dto.CommonResponseDTO;
 import com.plitsoft.ojt.member.domain.Member;
 import com.plitsoft.ojt.member.dto.common.UpdateServiceDTO;
 import com.plitsoft.ojt.member.dto.request.GetMembersReqQueryDTO;
@@ -21,7 +22,7 @@ import java.util.*;
 public class memberController {
 
     @Autowired
-    private memberService service;
+    private final memberService service;
 
     @GetMapping("/{id}")
     public GetMemberResDTO getMember(
