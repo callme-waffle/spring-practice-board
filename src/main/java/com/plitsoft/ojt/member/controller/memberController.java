@@ -51,10 +51,11 @@ public class memberController {
 
     @PatchMapping("/{id}")
     public PatchMemberResDTO patchMember(
+            @RequestAttribute("version") CommonResponseDTO.VersionResponseDTO version,
             @PathVariable("id") Long memberId,
             @RequestParam @Valid PatchMembersReqQueryDTO requestQueryDTO
     ) {
         UpdateServiceDTO updateResult = service.update(memberId, requestQueryDTO);
-        return new PatchMemberResDTO(updateResult);
+        return new PatchMemberResDTO(version, updateResult);
     }
 }
