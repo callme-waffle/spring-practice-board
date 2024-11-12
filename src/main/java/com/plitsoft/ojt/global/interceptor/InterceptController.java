@@ -10,6 +10,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -40,7 +41,7 @@ import java.util.stream.Stream;
  * @author waffle
  */
 @Component
-public class InterceptController  implements HandlerInterceptor, ApplicationContextAware {
+public class InterceptController implements HandlerInterceptor, ApplicationContextAware {
 
     public class InterceptorMethod {
         private Method method;
@@ -59,14 +60,25 @@ public class InterceptController  implements HandlerInterceptor, ApplicationCont
     }
 
     ApplicationContext context;
+    List<InterceptorMethod> handlers = new ArrayList<>();
 
     private ApplicationContext getApplicationContext() {
         return this.context;
     }
 
+    private List<InterceptorMethod> getHandlers() {
+        return this.handlers;
+}
+
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.context = applicationContext;
+        this.searchHandlers();
+    }
+
+    private void searchHandlers() {
+        ApplicationContext context = this.getApplicationContext();
+        this.handlers = this.getInterceptHandlers(context);
     }
 
     @Override
@@ -74,8 +86,7 @@ public class InterceptController  implements HandlerInterceptor, ApplicationCont
             HttpServletRequest request, HttpServletResponse response,
             Object handler
     ) throws Exception {
-        ApplicationContext context = this.getApplicationContext();
-        for (InterceptorMethod handlerMethod : this.getInterceptHandlers(context)) {
+        for (InterceptorMethod handlerMethod : this.getHandlers()) {
             handlerMethod.run(request, response);
         }
         return true;
