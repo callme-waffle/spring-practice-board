@@ -3,7 +3,7 @@ package com.plitsoft.ojt.global.dto;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-public class PatchCommonResponseDTO<T> extends CommonResponseDTO {
+public class PatchCommonResponseDTO<T> extends CommonResponseDTO<T> {
 
     @RequiredArgsConstructor
     @Getter

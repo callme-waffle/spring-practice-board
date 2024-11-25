@@ -1,9 +1,12 @@
 package com.plitsoft.ojt.member.service;
 
+import com.plitsoft.ojt.auth.dto.request.PostMemberJoinReqQueryDTO;
 import com.plitsoft.ojt.global.exception.DuplicateValueException;
 import com.plitsoft.ojt.global.util.DTOUtil;
 import com.plitsoft.ojt.member.domain.Member;
 import com.plitsoft.ojt.member.dao.FindRepositoryDAO;
+import com.plitsoft.ojt.member.domain.Part;
+import com.plitsoft.ojt.member.domain.UserRole;
 import com.plitsoft.ojt.member.dto.common.UpdateServiceDTO;
 import com.plitsoft.ojt.member.dto.request.GetMembersReqQueryDTO;
 import com.plitsoft.ojt.member.dto.request.PatchMembersReqQueryDTO;
@@ -24,9 +27,21 @@ public class memberService {
     private final memberRepository memberRepository;
 
     @Transactional
-    public Long join(Member member) {
-        checkEmailDup(member.getEmail());
+    public Long join(PostMemberJoinReqQueryDTO joinDTO, Part part) {
+        checkEmailDup(joinDTO.email());
+
+        Member member = this.createMemberEntity(joinDTO, part);
         return memberRepository.save(member);
+    }
+
+    private Member createMemberEntity(PostMemberJoinReqQueryDTO joinDTO, Part part) {
+        Member newMember = Member.builder()
+                .memberName(joinDTO.name())
+                .email(joinDTO.email())
+                .role(UserRole.valueOf(joinDTO.role()))
+                .part(part)
+                .build();
+        return new Member();
     }
 
     public Member find(Long memberId) {
@@ -58,13 +73,10 @@ public class memberService {
 
     @Transactional
     public UpdateServiceDTO update(Long memberId, PatchMembersReqQueryDTO requestDTO) {
-        Class<? extends PatchMembersReqQueryDTO> patchDTOClass = requestDTO.getClass();
-
         Member member = this.find(memberId);
         List<String> requestedPatchFields = DTOUtil.getNotNullValueGetterNames(requestDTO);
 
         int updatedCount = 0;
-
         for (String getterName : requestedPatchFields) {
             updatedCount++;
             Object value = DTOUtil.runMethod(requestDTO, getterName);
